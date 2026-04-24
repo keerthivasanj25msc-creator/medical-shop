@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shopping Cart - Healthy Life Medical Store</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background-color:#f0fff0;
+    margin:0;
+}
+
+header, footer{
+    background:#228b22;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.content{
+    padding:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th, td{
+    border:1px solid #999;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background-color:#ccffcc;
+}
+
+button{
+    padding:6px 12px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.remove-btn{
+    background:red;
+    color:white;
+}
+
+.clear-btn{
+    background:black;
+    color:white;
+    margin-top:20px;
+}
+
+.checkout-btn{
+    background:#228b22;
+    color:white;
+    margin-top:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Your Shopping Cart</h1>
+</header>
+
+<div class="content">
+
+<table id="cartTable">
+<tr>
+    <th>Item Name</th>
+    <th>Price (₹)</th>
+    <th>Quantity</th>
+    <th>Total</th>
+    <th>Action</th>
+</tr>
+</table>
+
+<h2 id="grandTotal">Grand Total: ₹0</h2>
+
+<button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+<button class="checkout-btn">Proceed to Checkout</button>
+
+</div>
+<a href="C:\Users\hp\OneDrive\wp\gallery.html">Next</a>
+
+<script>
+function loadCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let table = document.getElementById("cartTable");
+    let grandTotal = 0;
+
+    cart.forEach((item, index) => {
+        let row = table.insertRow();
+        row.insertCell(0).innerText = item.name;
+        row.insertCell(1).innerText = item.price;
+        row.insertCell(2).innerText = item.quantity;
+        row.insertCell(3).innerText = item.price * item.quantity;
+        
+        let removeCell = row.insertCell(4);
+        removeCell.innerHTML = `<button class="remove-btn" onclick="removeItem(${index})">Remove</button>`;
+
+        grandTotal += item.price * item.quantity;
+    });
+
+    document.getElementById("grandTotal").innerText = "Grand Total: ₹" + grandTotal;
+}
+
+function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    location.reload();
+}
+
+function clearCart() {
+    localStorage.removeItem("cart");
+    location.reload();
+}
+
+loadCart();
+</script>
+
+</body>
+</html>

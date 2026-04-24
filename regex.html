@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Regex Validation Form</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #4facfe;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #0077ff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Registration Form</h2>
+
+    <form onsubmit="return validateForm()">
+
+        <!-- Name -->
+        <input type="text" id="name" placeholder="Enter Name">
+        <div class="error" id="nameError"></div>
+
+        <!-- Email -->
+        <input type="text" id="email" placeholder="Enter Email">
+        <div class="error" id="emailError"></div>
+
+        <!-- Phone -->
+        <input type="text" id="phone" placeholder="Enter Phone Number">
+        <div class="error" id="phoneError"></div>
+
+        <!-- Username -->
+        <input type="text" id="username" placeholder="Enter Username">
+        <div class="error" id="userError"></div>
+
+        <!-- Password -->
+        <input type="password" id="password" placeholder="Enter Password">
+        <div class="error" id="passError"></div>
+
+        <button type="submit">Register</button>
+
+    </form>
+</div>
+
+<script>
+
+function validateForm() {
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    let valid = true;
+
+    // Regex Patterns
+    let namePattern = /^[A-Za-z ]+$/;
+    let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
+    let phonePattern = /^[0-9]{10}$/;
+    let userPattern = /^[A-Za-z0-9]{5,}$/;
+    let passPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    // Name Validation
+    if (!namePattern.test(name)) {
+        document.getElementById("nameError").innerHTML = "Only letters allowed";
+        valid = false;
+    } else {
+        document.getElementById("nameError").innerHTML = "";
+    }
+
+    // Email Validation
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerHTML = "Invalid email format";
+        valid = false;
+    } else {
+        document.getElementById("emailError").innerHTML = "";
+    }
+
+    // Phone Validation
+    if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").innerHTML = "Enter 10 digit number";
+        valid = false;
+    } else {
+        document.getElementById("phoneError").innerHTML = "";
+    }
+
+    // Username Validation
+    if (!userPattern.test(username)) {
+        document.getElementById("userError").innerHTML = "Min 5 characters (letters & numbers)";
+        valid = false;
+    } else {
+        document.getElementById("userError").innerHTML = "";
+    }
+
+    // Password Validation
+    if (!passPattern.test(password)) {
+        document.getElementById("passError").innerHTML = "Min 8 chars, include letter & number";
+        valid = false;
+    } else {
+        document.getElementById("passError").innerHTML = "";
+    }
+
+    return valid;
+}
+
+</script>
+
+</body>
+</html>
